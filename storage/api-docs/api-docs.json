@@ -1,53 +1,254 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Example API",
+        "title": "Ejemplo de documentacion API",
+        "description": "Este es un ejemplo de documentacion de una API hecha en Lumen/Laravel",
         "contact": {
-            "name": "Support Team",
-            "email": "support@example.com"
+            "name": "Juan Alvarez",
+            "email": "correo@gmail.com"
         },
         "version": "1.0"
     },
     "paths": {
-        "/sample/{category}/things": {
+        "/usuarios/": {
             "get": {
                 "tags": [
-                    "yourtag"
+                    "Usuarios"
                 ],
-                "operationId": "/sample/category/things",
+                "operationId": "App\\Http\\Controllers\\ExampleController::obtenerTodo",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve un usuario correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\ExampleController::crear",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado y devuelto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\ExampleController::obtenerUno",
                 "parameters": [
                     {
-                        "name": "category",
+                        "name": "id",
                         "in": "path",
-                        "description": "The category parameter in path",
+                        "description": "ID del usuario",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "criteria",
-                        "in": "query",
-                        "description": "Some optional other parameter",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
+                            "type": "number"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns some sample category things",
+                        "description": "Usuario encontrado y devuelto",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioDTO"
+                                    }
+                                }
                             }
                         }
                     },
-                    "400": {
-                        "description": "Error: Bad request. When required parameters were not supplied."
+                    "404": {
+                        "description": "No existe nada con ese ID"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\ExampleController::actualizar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado y devuelto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\ExampleController::eliminar",
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado y devuelto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UsuarioDTO": {
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "edad": {
+                        "type": "integer"
+                    },
+                    "sexo": {
+                        "description": "Puede ser M o F",
+                        "type": "string"
+                    },
+                    "activo": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "PublicacionDTP": {
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "texto": {
+                        "type": "string"
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    },
+                    "categoria": {
+                        "properties": {
+                            "id": {
+                                "type": "number"
+                            },
+                            "nombreCat": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "comentarios": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComentarioDTO"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "number"
+                                },
+                                "nombreTag": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ComentarioDTO": {
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "texto": {
+                        "type": "string"
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "description": "Token de autenticacion conformato como '<token>'",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     }
