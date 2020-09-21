@@ -1,10 +1,24 @@
 # Swagger en lumen/laravel
 
+- [Swagger en lumen/laravel](#swagger-en-lumenlaravel)
+  - [Instalación](#instalación)
+  - [Notacion](#notacion)
+    - [Informacion general de la API](#informacion-general-de-la-api)
+    - [Esquemas](#esquemas)
+      - [Esquema de seguridad basico (token)](#esquema-de-seguridad-basico-token)
+      - [Esquemas de objeto simple](#esquemas-de-objeto-simple)
+      - [Esquemas de objeto complejo](#esquemas-de-objeto-complejo)
+    - [Recursos expuestos](#recursos-expuestos)
+
 Generacion de documentacion Swagger a partir de anotaciones en los comentarios del código PHP.
 
 Ver el repositorio de la heramienta utilizada en <https://github.com/DarkaOnLine/SwaggerLume>
 
 Luego de leer esta documentacion, en el archivo `App/Http/Controllers/ExampleController.php` hay un ejemplo completo de un CRUD simple.
+
+<img src="README-image.png"/>
+
+-----------------------------------------------------------------------
 
 ## Instalación
 
@@ -120,6 +134,8 @@ Ejecutar todos los comandos parados en la raiz del proyecto
 
 Instrucciones basadas en: <https://stackoverflow.com/questions/45211512/how-to-integrate-swagger-in-lumen-laravel-for-rest-api>
 
+-----------------------------------------------------------------------
+
 ## Notacion
 
 ### Informacion general de la API
@@ -143,7 +159,7 @@ Es recomendable colocarla en el archivo `App/Http/Controllers/Controller.php`
 
 Un esquema es la definicion de una estructura la cual puede ser referenciada desde otras anotaciones. (Para no repetir código)
 
-### Esquema de seguridad basico (token)
+#### Esquema de seguridad basico (token)
 
 Define un esquema que agregará un **header** a cada peticion.
 
@@ -163,8 +179,6 @@ Es recomendable colocarla en el archivo `App/Http/Controllers/Controller.php`
 
 - **securityScheme:** Nombre con el que se le hará referencia
 - **name:** Nombre del header que se agregará
-
-### Esquemas de objetos
 
 #### Esquemas de objeto simple
 
